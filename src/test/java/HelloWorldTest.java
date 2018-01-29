@@ -1,5 +1,6 @@
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
@@ -35,14 +36,18 @@ public class HelloWorldTest {
     @ArquillianResource
     private URL deploymentUrl;
 
+    @Page
+    IndexPage indexPage;
+
     @Test
     public void testSetup() {
         Assert.assertNotNull(browser);
         Assert.assertNotNull(deploymentUrl);
 
         browser.get(deploymentUrl.toString());
-        Assert.assertTrue(browser.getPageSource().contains("Hello, world!"));
 
+        Assert.assertNotNull(indexPage);
+        Assert.assertTrue(indexPage.isHeaderCorrect());
 
     }
 
